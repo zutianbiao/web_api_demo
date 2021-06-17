@@ -1,0 +1,12 @@
+.git/
+*.pyc
+test.*
+/.idea/
+/venv/
+/docs/inner/
+/docs/build/
+/user_docs/build/
+*.log
+*.db
+.DS_Store
+/log/

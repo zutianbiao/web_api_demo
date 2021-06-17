@@ -1,0 +1,48 @@
+name: 'web_api_demo构建'
+timeout: '900'
+env:
+  image_name: 'web_api_demo'
+  package_name: 'web_api_demo'
+  package_path: './package/web_api_demo.tar.gz'
+  docker_file: './Dockerfile'
+  code_repository: 'web_api_demo'
+  project: 'web_api_demo'
+jobs:
+  执行构建:
+    runs-on: 'web_api_demo构建机'
+    steps:
+      - name: '拉取代码'
+        uses: 'checkout'
+        with:
+          code_repository: '{{ code_repository }}'
+      - name: '生成动态版本号'
+        uses: 'auto_version'
+        with:
+          base_version: 'test'
+      - name: 'tar打包'
+        run: mkdir -p package;tar -zcvf $package_path ./* --exclude=package
+      - name: '上传安装包'
+        uses: 'package_upload'
+        timeout: '300'
+        with:
+          package: '{{ package_path }}'
+          package_name: '{{ package_name }}'
+          package_version: '{{ OUTPUT_AUTO_VERSION }}'
+          project: '{{ project }}'
+          code_repository: '{{ code_repository }}'
+      - name: '构建docker image'
+        uses: 'docker_build'
+        timeout: '300'
+        with:
+          docker_file: '{{ docker_file }}'
+          image_name: '{{ image_name }}'
+          image_version: '{{ OUTPUT_AUTO_VERSION }}'
+      - name: '上传docker image'
+        uses: 'image_upload'
+        timeout: '300'
+        with:
+          image_name: '{{ image_name }}'
+          image_version: '{{ OUTPUT_AUTO_VERSION }}'
+          project: '{{ project }}'
+          code_repository: '{{ code_repository }}'
+
