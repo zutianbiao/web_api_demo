@@ -12,5 +12,5 @@ jobs:
       - name: '拉取代码'
         uses: 'actions/checkout@v2'
       - name: 'tar打包'
-        run: mkdir -p package;tar -zcvf $package_path ./* --exclude=package
+        run: tar --help;mkdir -p package;tar -zcvf $package_path ./* --exclude=package
 
