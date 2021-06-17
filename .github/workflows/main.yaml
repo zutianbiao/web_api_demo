@@ -3,6 +3,8 @@ on:
   push:
     branches:
       master
+env:
+  package_path: './package/web_api_demo.tar.gz'
 jobs:
   build:
     runs-on: ubuntu-latest
