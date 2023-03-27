@@ -12,7 +12,7 @@ jobs:
       - name: '打印全部内置变量'
         run: env
       - name: '拉取代码'
-        uses: 'actions/checkout@v2'
+        uses: 'actions/checkout@v3'
       - name: 'tar打包'
         run: mkdir -p package;tar --exclude=package -zcvf  $package_path ./*
 
